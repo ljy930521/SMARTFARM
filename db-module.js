@@ -139,7 +139,7 @@ module.exports = {
     },
     getCurrentSensor: function(callback) {
         let db = new sqlite3.Database("db/smartfarm.db");
-        let sql = `SELECT temperature, humidity, cds, distance, strftime('%Y-%m-%d %H:%M:%S', sensingTime, 'localtime') sTime, uid FROM sensor ORDER BY sid DESC LIMIT 1`;
+        let sql = `SELECT temperature, humidity, cds, gas, distance, strftime('%Y-%m-%d %H:%M:%S', sensingTime, 'localtime') sTime, uid FROM sensor ORDER BY sid DESC LIMIT 1`;
         db.each(sql, function(err, row) {
             if (err) {
                 console.error('getCurrentSensor DB 오류', err);
@@ -149,11 +149,11 @@ module.exports = {
         });
         db.close();
     },
-    insertSensor: function(temp, humid, cds, dist, uid, callback) {
+    insertSensor: function(temp, humid, cds, gas, dist, uid, callback) {
         let db = new sqlite3.Database("db/smartfarm.db");
-        let sql = `INSERT INTO sensor(temperature, humidity, cds, distance, uid) values (?,?,?,?,?)`;
+        let sql = `INSERT INTO sensor(temperature, humidity, cds, gas, distance, uid) values (?,?,?,?,?,?)`;
         let stmt = db.prepare(sql);
-        stmt.run(temp, humid, cds, dist, uid, function(err) {
+        stmt.run(temp, humid, cds, gas, dist, uid, function(err) {
             if (err) {
                 console.error('insertSensor DB 오류', err);
                 return;

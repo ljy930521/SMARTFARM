@@ -58,10 +58,11 @@ app.get('/sensor', function(req, res) {
                 let temp = sensor.temperature;
                 let humid = sensor.humidity;
                 let cds = sensor.cds;
+                let gas = sensor.gas;
                 let dist = sensor.distance;
                 dist = dist.toFixed(1);
                 // DB에 등록하기
-                dbModule.insertSensor(temp, humid, cds, dist, uid, function() {
+                dbModule.insertSensor(temp, humid, cds, gas, dist, uid, function() {
                     // 화면에 보여주기
                     dbModule.getCurrentSensor(function(sensor) {
                         wm.getWeather(function(weather) {

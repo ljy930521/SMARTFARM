@@ -6,6 +6,8 @@ const HUMID_LOW = 20.0;
 const HUMID_HIGH = 28.0;
 const CDS_LOW = 65.0;
 const CDS_HIGH = 90.0;
+const GAS_LOW = 70.0;
+const GAS_HIGH = 170.0;
 const DIST_LOW = 10.0;
 const DIST_HIGH = 30.0
 
@@ -13,6 +15,7 @@ module.exports.home = function(navBar, menuLink, sensor, actuator) {
     let temp = sensor.temperature;
     let humid = sensor.humidity;
     let cds = sensor.cds;
+    let gas = sensor.gas;
     let dist = sensor.distance;
     let sTime = sensor.sTime;
     let sUid = sensor.uid;
@@ -24,7 +27,7 @@ module.exports.home = function(navBar, menuLink, sensor, actuator) {
     let reason = actuator.reason;
     let aUid = actuator.uid;
     
-    let tempColor, humidColor, cdsColor, distColor;
+    let tempColor, humidColor, cdsColor, gasColor, distColor;
     if (temp > TEMP_HIGH) tempColor = 'bg-danger';
     else if (temp < TEMP_LOW) tempColor = 'bg-secondary';
     else tempColor = 'bg-success';
@@ -34,6 +37,9 @@ module.exports.home = function(navBar, menuLink, sensor, actuator) {
     if (cds > CDS_HIGH) cdsColor = 'bg-danger';
     else if (cds < CDS_LOW) cdsColor = 'bg-secondary';
     else cdsColor = 'bg-success';
+    if (gas > GAS_HIGH) gasColor = 'bg-danger';
+    else if (gas < GAS_LOW) gasColor = 'bg-secondary';
+    else gasColor = 'bg-success';
     if (dist > DIST_HIGH) distColor = 'bg-danger';
     else if (dist < DIST_LOW) distColor = 'bg-secondary';
     else distColor = 'bg-success';
@@ -89,6 +95,15 @@ module.exports.home = function(navBar, menuLink, sensor, actuator) {
                                 <td style="text-align: center;">
                                     <div class="progress" style="height: 25px; width: 400px">
                                         <div class="progress-bar ${cdsColor}" role="progressbar" style="width: ${cds/250*100}%" aria-valuemin="0" aria-valuemax="300">${cds}</div>
+                                    </div></td>
+                                <td>${sUid}</td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:rosybrown"><i class="fas fa-wind"></i></span>&nbsp;&nbsp;가스농도</td>
+                                <td>0 ~ 500 ppm</td>
+                                <td style="text-align: center;">
+                                    <div class="progress" style="height: 25px; width: 400px">
+                                        <div class="progress-bar ${gasColor}" role="progressbar" style="width: ${gas/500*100}%" aria-valuemin="0" aria-valuemax="500">${gas}</div>
                                     </div></td>
                                 <td>${sUid}</td>
                             </tr>

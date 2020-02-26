@@ -6,6 +6,8 @@ const HUMID_LOW = 20.0;
 const HUMID_HIGH = 28.0;
 const CDS_LOW = 65.0;
 const CDS_HIGH = 90.0;
+const GAS_LOW = 100.0;
+const GAS_HIGH = 300.0;
 const DIST_LOW = 10.0;
 const DIST_HIGH = 30.0
 const ok = `<span style="color:green"><i class="far fa-thumbs-up"></i></span>`;
@@ -16,11 +18,12 @@ module.exports.sensor = function(navBar, menuLink, sensor) {
     let temp = sensor.temperature;
     let humid = sensor.humidity;
     let cds = sensor.cds;
+    let gas = sensor.gas;
     let dist = sensor.distance;
     let sTime = sensor.sTime;
     let sUid = sensor.uid;
 
-    let tempSign, humidSign, cdsSign, distSign;
+    let tempSign, humidSign, cdsSign, gasSign, distSign;
     if (temp > TEMP_HIGH) tempSign = up;
     else if (temp < TEMP_LOW) tempSign = down;
     else tempSign = ok;
@@ -30,6 +33,9 @@ module.exports.sensor = function(navBar, menuLink, sensor) {
     if (cds > CDS_HIGH) cdsSign = up;
     else if (cds < CDS_LOW) cdsSign = down;
     else cdsSign = ok;
+    if (gas > GAS_HIGH) gasSign = up;
+    else if (gas < GAS_LOW) gasSign = down;
+    else gasSign = ok;
     if (dist > DIST_HIGH) distSign = up;
     else if (dist < DIST_LOW) distSign = down;
     else distSign = ok;
@@ -62,7 +68,7 @@ module.exports.sensor = function(navBar, menuLink, sensor) {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                            <tr>
                                 <td><i class="fas fa-thermometer-half"></i>&nbsp;&nbsp;온도</td>
                                 <td>${TEMP_LOW} ~ ${TEMP_HIGH}</td>
                                 <td>${temp}</td><td>℃</td><td>${tempSign}</td>
@@ -76,6 +82,11 @@ module.exports.sensor = function(navBar, menuLink, sensor) {
                                 <td><i class="far fa-lightbulb"></i>&nbsp;&nbsp;조도</td>
                                 <td>${CDS_LOW} ~ ${CDS_HIGH}</td>
                                 <td>${cds}</td><td>lux</td><td>${cdsSign}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-wind"></i>&nbsp;&nbsp;가스농도</td>
+                                <td>${GAS_LOW} ~ ${GAS_HIGH}</td>
+                                <td>${gas}</td><td>ppm</td><td>${gasSign}</td>
                             </tr>
                             <tr>
                                 <td><i class="fas fa-ruler-vertical"></i>&nbsp;&nbsp;거리</td>
